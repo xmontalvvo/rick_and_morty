@@ -6,11 +6,15 @@ export default function Card({ char, onClose }) {
 
    return (
       <div className='card'>
-         <button onClick={() => onClose(id)}>X</button>
-         <Link to={`/detail/${id}`}>
-            <h3>{name}</h3>
-            <img src={image} alt={name} />
-         </Link>
+         <div className='close'>
+            <button onClick={() => onClose(id)}>X</button>
+         </div>
+         <div className='info'>
+            <Link to={`/detail/${id}`}>
+               <h3>{name}</h3>
+               <img src={image} alt={name} />
+            </Link>
+         </div>
       </div>
    );
 }

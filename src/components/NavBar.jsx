@@ -3,19 +3,20 @@ import SearchBar from './SearchBar'
 import './NavBar.css'
 import { Link } from 'react-router-dom'
 
-export default function NavBar({ onSearch }) {
+export default function NavBar({ onSearch, logout }) {
+
   return (
     <div className='nav'>
-      <Link to="/">
-        <button>Salir</button>
+      <SearchBar onSearch={onSearch} />
+      <Link to="/home">
+        <h4>Home</h4>
       </Link>
       <Link to="/about">
-        <button>About</button>
+        <h4>About</h4>
       </Link>
-      <Link to="/home">
-        <button>Home</button>
+      <Link to="/">
+        <button onClick={logout}>Salir</button>
       </Link>
-      <SearchBar onSearch={onSearch} />
     </div>
   )
 }
