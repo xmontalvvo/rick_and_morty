@@ -8,6 +8,9 @@ export default function NavBar({ onSearch, logout }) {
   return (
     <div className='nav'>
       <SearchBar onSearch={onSearch} />
+      <Link to="/favorites">
+        <h4>Favorites</h4>
+      </Link>
       <Link to="/home">
         <h4>Home</h4>
       </Link>

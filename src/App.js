@@ -8,8 +8,11 @@ import Login from './components/Login';
 import About from './components/About';
 import Detail from './components/Detail';
 import Error404 from './components/Error404';
+import Favorites from './components/Favorites';
+import { connect } from 'react-redux';
+import { addFav, removeFav } from './redux/actions'
 
-function App() {
+function App({removeFav}) {
 
    const navigate = useNavigate();
    const [access, setAccess] = useState(false);
@@ -52,9 +55,9 @@ function App() {
    }
 
    function onClose(id) {
-      setCharacters((oldChars) => {
-         return oldChars.filter((ch) => ch.id !== id)
-      });
+      const newCharacters = characters.filter((ch)=> ch.id !== Number(id))
+      setCharacters(newCharacters)
+      removeFav(Number(id))
    }
 
    const { pathname } = useLocation()
@@ -69,6 +72,7 @@ function App() {
             <Route path="/" element={<Login login={login} />}></Route>
             <Route path="/home" element={<Cards onClose={onClose} characters={characters} />}></Route>
             <Route path="/about" element={<About />}></Route>
+            <Route path='/favorites' element={<Favorites onClose={onClose} />}></Route>
             <Route path="/detail/:id" element={<Detail />}></Route>
             <Route path="*" element={<Error404 />}></Route>
          </Routes>
@@ -76,4 +80,15 @@ function App() {
    );
 }
 
-export default App;
+function mapDispatch(dispatch) {
+   return {
+      addFav: function (char) {
+         dispatch(addFav(char))
+      },
+      removeFav: function (id) {
+         dispatch(removeFav(id))
+      }
+   }
+}
+
+export default connect(null, mapDispatch)(App)

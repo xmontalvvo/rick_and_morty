@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+//import { Link, useNavigate } from 'react-router-dom'
 
 import './Login.css'
 
@@ -17,7 +17,7 @@ export default function Login({ login }) {
     password: "",
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const validate = (inputs) => {
     const errors = {};
