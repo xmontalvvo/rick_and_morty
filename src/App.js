@@ -9,15 +9,17 @@ import About from './components/About';
 import Detail from './components/Detail';
 import Error404 from './components/Error404';
 import Favorites from './components/Favorites';
-import { connect } from 'react-redux';
-import { addFav, removeFav } from './redux/actions'
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { addFav, removeFav, addChar, removeChar } from './redux/actions'
 
-function App({removeFav}) {
+export default function App() {
 
    const navigate = useNavigate();
    const [access, setAccess] = useState(false);
    const EMAIL = "eje@gmail.com";
    const PASSWORD = "@123QWEasd";
+
+   const dispatch = useDispatch()
 
    function login(inputs) {
       if (inputs.password === PASSWORD && inputs.email === EMAIL) {
@@ -36,8 +38,9 @@ function App({removeFav}) {
       navigate("/");
    }
 
-   const [characters, setCharacters] = useState([])
-
+   //const [characters, setCharacters] = useState([])
+   const {characters} = useSelector((state) => state)
+   
    function onSearch(id) {
       axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
          if (data.name) {
@@ -45,7 +48,7 @@ function App({removeFav}) {
             if (exist) {
                alert('Ya existe este personaje')
             } else {
-               setCharacters((oldChars) => [...oldChars, data]);
+               dispatch(addChar(data));
             }
 
          } else {
@@ -55,9 +58,8 @@ function App({removeFav}) {
    }
 
    function onClose(id) {
-      const newCharacters = characters.filter((ch)=> ch.id !== Number(id))
-      setCharacters(newCharacters)
-      removeFav(Number(id))
+      dispatch(removeChar(Number(id)))
+      dispatch(removeFav(Number(id)))
    }
 
    const { pathname } = useLocation()
@@ -70,7 +72,7 @@ function App({removeFav}) {
 
          <Routes>
             <Route path="/" element={<Login login={login} />}></Route>
-            <Route path="/home" element={<Cards onClose={onClose} characters={characters} />}></Route>
+            <Route path="/home" element={<Cards onClose={onClose} />}></Route>
             <Route path="/about" element={<About />}></Route>
             <Route path='/favorites' element={<Favorites onClose={onClose} />}></Route>
             <Route path="/detail/:id" element={<Detail />}></Route>
@@ -80,15 +82,15 @@ function App({removeFav}) {
    );
 }
 
-function mapDispatch(dispatch) {
-   return {
-      addFav: function (char) {
-         dispatch(addFav(char))
-      },
-      removeFav: function (id) {
-         dispatch(removeFav(id))
-      }
-   }
-}
+// function mapDispatch(dispatch) {
+//    return {
+//       addFav: function (char) {
+//          dispatch(addFav(char))
+//       },
+//       removeFav: function (id) {
+//          dispatch(removeFav(id))
+//       }
+//    }
+// }
 
-export default connect(null, mapDispatch)(App)
+// export default connect(null, mapDispatch)(App)

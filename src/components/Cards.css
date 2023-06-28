@@ -5,6 +5,10 @@
     justify-items: center
 }
 
+.paginate{
+    display: flex;
+}
+
 
 @media screen and (max-width:825px){
     .cards{
