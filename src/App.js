@@ -14,6 +14,8 @@ import { addFav, removeFav, addChar, removeChar } from './redux/actions'
 
 export default function App() {
 
+   //Pequeño comentario de prueba
+
    const navigate = useNavigate();
    const [access, setAccess] = useState(false);
    const EMAIL = "eje@gmail.com";
